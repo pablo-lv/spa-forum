@@ -13208,18 +13208,56 @@ setTimeout(function () {
 module.exports = Vue;
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":1}],5:[function(require,module,exports){
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\nHello from the App component.\n"
+var inserted = exports.cache = {}
+
+exports.insert = function (css) {
+  if (inserted[css]) return
+  inserted[css] = true
+
+  var elem = document.createElement('style')
+  elem.setAttribute('type', 'text/css')
+
+  if ('textContent' in elem) {
+    elem.textContent = css
+  } else {
+    elem.styleSheet.cssText = css
+  }
+
+  document.getElementsByTagName('head')[0].appendChild(elem)
+  return elem
+}
+
+},{}],6:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("* {\n  box-sizing: border-box;\n}\n.view {\n  margin-top: 12px;\n  -webkit-transition: opacity 0.2s ease;\n  transition: opacity 0.2s ease;\n  padding-left: 15px;\n  padding-right: 15px;\n}\n.view.v-enter,\n.view.v-leave {\n  opacity: 0;\n}\n.Header {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  width: 100%;\n  border-bottom: 1px #f0f0f0 solid;\n  padding-left: 20px;\n}\n.Header__logo {\n  font-family: \"Lato\";\n  font-weight: 300;\n  color: #333;\n  cursor: pointer;\n}\n.Header__logo small {\n  font-size: 18px;\n}\n.Header__links {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Header__link {\n  margin-right: 20px;\n}\n.Header__link > a {\n  color: #00bfff;\n  text-decoration: none;\n  padding-bottom: 8px;\n}\n.Header__link:hover {\n  border-bottom: 1px solid #00bfff;\n}\n")
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div id=\"root\">\n    <header class=\"Header\">\n        <h1 v-link=\"{ name: 'home' }\" class=\"Header__logo\">\n            SPA-FORUM <small>with vue.js</small>\n        </h1>\n    </header>\n    <main>\n        <!-- router outlet -->\n        <router-view class=\"view\" keep-alive=\"\" transition=\"\" transition-mode=\"out-in\">\n        </router-view>\n    </main>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["* {\n  box-sizing: border-box;\n}\n.view {\n  margin-top: 12px;\n  -webkit-transition: opacity 0.2s ease;\n  transition: opacity 0.2s ease;\n  padding-left: 15px;\n  padding-right: 15px;\n}\n.view.v-enter,\n.view.v-leave {\n  opacity: 0;\n}\n.Header {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  width: 100%;\n  border-bottom: 1px #f0f0f0 solid;\n  padding-left: 20px;\n}\n.Header__logo {\n  font-family: \"Lato\";\n  font-weight: 300;\n  color: #333;\n  cursor: pointer;\n}\n.Header__logo small {\n  font-size: 18px;\n}\n.Header__links {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.Header__link {\n  margin-right: 20px;\n}\n.Header__link > a {\n  color: #00bfff;\n  text-decoration: none;\n  padding-bottom: 8px;\n}\n.Header__link:hover {\n  border-bottom: 1px solid #00bfff;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
   if (!module.hot.data) {
     hotAPI.createRecord("_v-56db834d", module.exports)
   } else {
     hotAPI.update("_v-56db834d", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":4,"vue-hot-reload-api":2}],6:[function(require,module,exports){
+},{"vue":4,"vue-hot-reload-api":2,"vueify/lib/insert-css":5}],7:[function(require,module,exports){
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"home-view\">\n    This is the homepage.\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-1275cbb0", module.exports)
+  } else {
+    hotAPI.update("_v-1275cbb0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":4,"vue-hot-reload-api":2}],8:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -13234,15 +13272,34 @@ var _App = require('./components/App.vue');
 
 var _App2 = _interopRequireDefault(_App);
 
+var _HomeView = require('./components/HomeView.vue');
+
+var _HomeView2 = _interopRequireDefault(_HomeView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Install the router
 _vue2.default.use(_vueRouter2.default);
 
-var router = new _vueRouter2.default();
+var router = new _vueRouter2.default({
+    history: true
+});
+
+//Register component
+router.map({
+    '/': {
+        name: 'home',
+        component: _HomeView2.default
+    }
+});
+
+//Redirect doesn't exists pages
+router.redirect({
+    '*': '/'
+});
 
 router.start(_App2.default, 'app');
 
-},{"./components/App.vue":5,"vue":4,"vue-router":3}]},{},[6]);
+},{"./components/App.vue":6,"./components/HomeView.vue":7,"vue":4,"vue-router":3}]},{},[8]);
 
 //# sourceMappingURL=main.js.map
